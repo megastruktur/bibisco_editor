@@ -8,6 +8,6 @@ Right now is able to edit and save Scene revisions.
 
 # Screenshots
 
-![Scenes](screenshots/scenes.jpg)
-![View scene revision](screenshots/view_scene_revision.jpg)
-![Edit scene revision](screenshots/edit_scene_revision.jpg)
+<img align="left" src="screenshots/scenes.jpg" width="300">
+<img align="left" src="screenshots/view_scene_revision.jpg" width="300">
+<img align="left" src="screenshots/edit_scene_revision.jpg" width="300">
