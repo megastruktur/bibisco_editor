@@ -98,6 +98,7 @@ class ArticleDataScene implements Editable {
 
   @override
   void setTextName(String newValue) {
+    // @todo localize
     title = newValue == '' ? 'Title' : newValue;
   }
 

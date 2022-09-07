@@ -1,0 +1,11 @@
+{
+  "title": "Title",
+  "pickFile": "Pick a file",
+  "loadBook": "Load a Book",
+  "saveJSON": "Save JSON",
+  "chapters": "Chapters",
+  "addNewScene": "Add New Scene",
+  "uncategorized": "Uncategorized",
+  "noName": "No Name",
+  "enterTextHere": "Enter text here"
+}

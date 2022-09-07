@@ -29,7 +29,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-#  file_picker: ^5.0.1
+  flutter_localizations:
+      sdk: flutter
   flutter_html: ^3.0.0-alpha.5
   html_editor_enhanced: ^2.5.0
 
@@ -91,3 +92,4 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  generate: true

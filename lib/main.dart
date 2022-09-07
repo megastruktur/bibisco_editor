@@ -1,14 +1,13 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'book.dart';
-import 'dart:developer';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'editable.dart';
 import 'globals.dart' as globals;
 import 'package:flutter_html/flutter_html.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:provider/provider.dart';
 import 'scene.dart';
 
 void main() {
@@ -30,6 +29,16 @@ class _BibiscoEditorState extends State<BibiscoEditor> {
   Widget build(BuildContext context) {
     return const MaterialApp(
       home: LoadBookPage(),
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        Locale('en', ''), // English, no country code
+        Locale('ru', ''), // Russian, no country code
+      ],
     );
   }
 }
@@ -59,7 +68,7 @@ class _LoadBookPageState extends State<LoadBookPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pick a file'),
+        title: Text(AppLocalizations.of(context)!.pickFile),
       ),
       body: Center(
         child: Column(
@@ -81,11 +90,11 @@ class _LoadBookPageState extends State<LoadBookPage> {
                   // User canceled the picker
                 }
               },
-              child: Text('Pick a file'),
+              child: Text(AppLocalizations.of(context)!.pickFile),
             ),
 
             ElevatedButton(
-              child: Text('Load Book'),
+              child: Text(AppLocalizations.of(context)!.loadBook),
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
@@ -95,7 +104,7 @@ class _LoadBookPageState extends State<LoadBookPage> {
               },
             ),
             ElevatedButton(
-              child: Text('Save JSON'),
+              child: Text(AppLocalizations.of(context)!.saveJSON),
               onPressed: () => globals.book.save(),
             ),
             // Text(globals.book != null ? globals.book.project.name : 'No book loaded'),
@@ -131,12 +140,12 @@ class _BookChaptersState extends State<BookChapters> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Chapters'),
+        title: Text(AppLocalizations.of(context)!.chapters),
         // Add icons to the app bar
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.add),
-            tooltip: 'Add new Scene',
+            tooltip: AppLocalizations.of(context)!.addNewScene,
             onPressed: () {
               // Navigate to creator screen
               Navigator.of(context).push(
@@ -185,7 +194,7 @@ class _BookChaptersState extends State<BookChapters> {
 
     // Add Uncategorized scenes with chapter.$loki = 0
     chapters?.add(ExpansionTile(
-      title: const Text('Uncategorized'),
+      title: Text(AppLocalizations.of(context)!.uncategorized),
       children: _getScenesInChapter(0)?.map<Widget>((scene) {
         return ListTile(
           title: Text(scene.title),
@@ -233,7 +242,8 @@ class _EditorState extends State<Editor> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.editable.getTextName() ?? 'No name'),
+        title: Text(widget.editable.getTextName() ?? AppLocalizations.of
+          (context)!.noName),
         actions: <Widget>[
           Padding(
             padding: EdgeInsets.only(right: 20.0),
@@ -282,7 +292,7 @@ class _EditorState extends State<Editor> {
               controller: controller,
               htmlEditorOptions: HtmlEditorOptions(
                 initialText: widget.editable.getTextEditField(),
-                hint: 'Enter text here...',
+                hint: AppLocalizations.of(context)!.enterTextHere,
               ),
               // Get the text from the editor
               // onShowSource: () async {
@@ -318,7 +328,8 @@ class _CreatorState extends State<Creator> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.editable.getTextName() ?? 'No name'),
+        title: Text(widget.editable.getTextName() ?? AppLocalizations.of
+          (context)!.noName),
         actions: <Widget>[
           Padding(
             padding: EdgeInsets.only(right: 20.0),
@@ -366,7 +377,7 @@ class _CreatorState extends State<Creator> {
               controller: controller,
               htmlEditorOptions: HtmlEditorOptions(
                 initialText: widget.editable.getTextEditField(),
-                hint: 'Enter text here...',
+                hint: AppLocalizations.of(context)!.enterTextHere,
               ),
               // Get the text from the editor
               // onShowSource: () async {
@@ -402,7 +413,8 @@ class _ViewerState extends State<Viewer> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.editable.getTextName() ?? 'No name'),
+        title: Text(widget.editable.getTextName() ?? AppLocalizations.of
+          (context)!.noName),
         actions: <Widget>[
           Padding(
             padding: EdgeInsets.only(right: 20.0),

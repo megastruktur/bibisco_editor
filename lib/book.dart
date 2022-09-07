@@ -129,9 +129,6 @@ class Book {
   };
 
   Future<bool> save() async {
-
-    await Future.delayed(Duration(seconds: 1));
-
     try {
       String json = jsonEncode(this);
       File file = File(globals.bookFilePath);
