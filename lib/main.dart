@@ -142,25 +142,48 @@ class _BookChaptersState extends State<BookChapters> {
   }
 
   _getChaptersWidget() {
-    return globals.book.chapters?.map<ExpansionTile>((chapter) {
+
+    List<Widget>? chapters = globals.book.chapters?.map<ExpansionTile>(
+            (chapter) {
       return ExpansionTile(
-          title: Text(chapter.title),
-          children: _getScenesInChapter(chapter.$loki)?.map<Widget>((scene) {
-            return ListTile(
-              title: Text(scene.title),
-              // Icon with view
-              trailing: const Icon(Icons.visibility),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => Viewer(editable: scene),
-                  ),
-                );
-              },
-            );
-          }).toList(),
+        title: Text(chapter.title),
+        children: _getScenesInChapter(chapter.$loki)?.map<Widget>((scene) {
+          return ListTile(
+            title: Text(scene.title),
+            // Icon with view
+            trailing: const Icon(Icons.visibility),
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => Viewer(editable: scene),
+                ),
+              );
+            },
+          );
+        }).toList(),
       );
     }).toList();
+
+    // Add Uncategorized scenes with chapter.$loki = 0
+    chapters?.add(ExpansionTile(
+      title: const Text('Uncategorized'),
+      children: _getScenesInChapter(0)?.map<Widget>((scene) {
+        return ListTile(
+          title: Text(scene.title),
+          // Icon with view
+          trailing: const Icon(Icons.visibility),
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => Viewer(editable: scene),
+              ),
+            );
+          },
+        );
+      }).toList(),
+    ));
+
+    return chapters;
   }
 
   _getScenesInChapter(int chapterId) {
