@@ -186,9 +186,15 @@ class _BookChaptersState extends State<BookChapters> {
     return chapters;
   }
 
+  /// Get scenes in chapter.
+  /// Order by Position.
+  /// @todo Optimize sorting, on JSON load maybe?
   _getScenesInChapter(int chapterId) {
-    // @todo Check the order!!!
-    return globals.book.scenes?.where((scene) => scene.chapterid == chapterId);
+    // Order by position
+    List? scenes = globals.book.scenes?.where((scene) => scene.chapterid ==
+        chapterId).toList();
+    scenes?.sort((a, b) => a.position.compareTo(b.position));
+    return scenes;
   }
 }
 
