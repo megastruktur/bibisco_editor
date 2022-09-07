@@ -132,6 +132,25 @@ class _BookChaptersState extends State<BookChapters> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Chapters'),
+        // Add icons to the app bar
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.add),
+            tooltip: 'Add new Scene',
+            onPressed: () {
+              // Navigate to creator screen
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => Creator(
+                    editable: ArticleDataScene.empty(),
+                  ),
+                ),
+              );
+              // Refresh the UI
+              setState(() {});
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -239,7 +258,92 @@ class _EditorState extends State<Editor> {
                   controller.getText().then((value) =>
                   {
                     widget.editable.setTextEditField(value),
+                    // @todo Change all of book saves to listeners
                     globals.book.save(),
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                      builder: (context) => Viewer(editable: widget.editable),
+                      ),
+                    ),
+                  });
+                },
+                child: const Icon(
+                  Icons.save,
+                  size: 26.0,
+                )
+            ),
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            HtmlEditor(
+              controller: controller,
+              htmlEditorOptions: HtmlEditorOptions(
+                initialText: widget.editable.getTextEditField(),
+                hint: 'Enter text here...',
+              ),
+              // Get the text from the editor
+              // onShowSource: () async {
+              //   final text = await _controller.getText();
+              //   print(text);
+              // },
+              // Get the HTML from the editor
+              // onShowHtml: (context) async {
+              //   final html = await _controller.getHtml();
+              //   print(html);
+              // },
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class Creator extends StatefulWidget {
+
+  final Editable editable;
+  const Creator({Key? key, required this.editable}) : super(key: key);
+
+  @override
+  _CreatorState createState() => _CreatorState();
+}
+
+class _CreatorState extends State<Creator> {
+
+  HtmlEditorController controller = HtmlEditorController();
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.editable.getTextName() ?? 'No name'),
+        actions: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(right: 20.0),
+            child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => Viewer(editable: widget.editable),
+                    ),
+                  );
+                },
+                child: const Icon(
+                  Icons.visibility,
+                  size: 26.0,
+                )
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(right: 50.0),
+            child: GestureDetector(
+                onTap: () {
+                  controller.getText().then((value) =>
+                  {
+                    widget.editable.setTextEditField(value),
+                    widget.editable.create(),
                     Navigator.of(context).push(
                       MaterialPageRoute(
                       builder: (context) => Viewer(editable: widget.editable),

@@ -142,6 +142,12 @@ class Book {
     }
     return true;
   }
+
+  void addScene(ArticleDataScene scene) {
+    collections[4].maxId++;
+    scene.$loki = collections[4].maxId;
+    collections[4].data!.add(scene);
+  }
 }
 
 // Function to Load the book from the assets folder into global variable book

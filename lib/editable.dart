@@ -7,4 +7,5 @@ abstract class Editable {
   String? getTextName();
   void setTextName(String newValue);
 
+  void create();
 }

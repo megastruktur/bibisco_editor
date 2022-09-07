@@ -1,6 +1,7 @@
 import 'bibisco_meta.dart';
 import 'editable.dart';
 import 'scene_revision.dart';
+import 'globals.dart' as globals;
 
 // 4
 class ArticleDataScene implements Editable {
@@ -46,6 +47,23 @@ class ArticleDataScene implements Editable {
         $loki: json["\$loki"],
       );
 
+  // Empty object builder
+  factory ArticleDataScene.empty() => ArticleDataScene(
+    title: '',
+    chapterid: 0,
+    revision: 0,
+    revisions: [
+      ArticleDataSceneRevision.empty()
+    ],
+    characters: 0,
+    lastsave: '',
+    position: 0,
+    status: '',
+    words: 0,
+    meta: BibiscoMeta.empty(),
+    $loki: 0,
+  );
+
   // toJson
   Map<String, dynamic> toJson() => {
         "title": title,
@@ -63,7 +81,8 @@ class ArticleDataScene implements Editable {
 
   @override
   String? getTextEditField() {
-    return revisions[0].text;
+    // get latest revision
+    return revisions.last.text;
   }
 
   @override
@@ -71,13 +90,21 @@ class ArticleDataScene implements Editable {
     return title;
   }
 
+  // @todo count words for revision.
   @override
   void setTextEditField(String? newValue) {
-    revisions[0].text = newValue ?? '';
+    revisions.last.text = newValue ?? '';
   }
 
   @override
   void setTextName(String newValue) {
-    // TODO: implement setTextName
+    title = newValue == '' ? 'Title' : newValue;
+  }
+
+  @override
+  void create() {
+    globals.book.addScene(this);
+    // @todo add a listener to handle that one.
+    globals.book.save();
   }
 }

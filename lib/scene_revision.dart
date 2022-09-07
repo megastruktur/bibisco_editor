@@ -59,6 +59,21 @@ class ArticleDataSceneRevision implements Editable {
         "words": words,
       };
 
+  // Empty object builder
+  factory ArticleDataSceneRevision.empty() => ArticleDataSceneRevision(
+    characters: 0,
+    locationid: 0,
+    povid: '',
+    povcharacterid: '',
+    scenecharacters: [],
+    sceneobjects: [],
+    scenestrands: [],
+    text: '',
+    time: '',
+    timegregorian: true,
+    words: 0,
+  );
+
 
   @override
   String getTextName() {
@@ -83,4 +98,8 @@ class ArticleDataSceneRevision implements Editable {
     words = text.split(' ').length;
   }
 
+  @override
+  void create() {
+    throw UnimplementedError();
+  }
 }

@@ -18,6 +18,14 @@ class BibiscoMeta {
     updated: json["updated"],
   );
 
+  // Empty object builder
+  factory BibiscoMeta.empty() => BibiscoMeta(
+    revision: 0,
+    created: 0,
+    version: 0,
+    updated: 0,
+  );
+
   // toJson
   Map<String, dynamic> toJson() => {
     "revision": revision,
